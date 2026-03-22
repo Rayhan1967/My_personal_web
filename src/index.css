@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-cyan: #00f2ff;
+  --neon-green: #adff2f;
+  --glass-dark: rgba(10, 15, 25, 0.85);
+  --glass-border: rgba(0, 242, 255, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #050510;
+  font-family: 'Fira Code', monospace;
+}
+
+.glass-panel {
+  background: var(--glass-dark);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.text-neon-cyan {
+  color: #00f2ff;
+}
+
+.text-neon-green {
+  color: #adff2f;
+}
+
+.text-pink-500 {
+  color: #ff00ff;
+}
+
+/* Scanline overlay */
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.03) 50%);
+  background-size: 100% 4px;
+}
+
+.scanline-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 242, 255, 0.015) 50%, transparent 100%);
+  animation: scanlineMove 6s linear infinite;
+}
+
+@keyframes scanlineMove {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 242, 255, 0.05);
+}
+::-webkit-scrollbar-thumb {
+  background: #00f2ff;
+  border-radius: 2px;
+}
+
+/* Status dot pulse */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px #adff2f; }
+  50% { opacity: 0.5; box-shadow: 0 0 16px #adff2f; }
+}
+
+.status-dot {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}

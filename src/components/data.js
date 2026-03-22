@@ -1,0 +1,58 @@
+export const graphData = {
+  nodes: [
+    { id: 'Me', group: 'center', val: 35, details: { level: 'Professional', summary: 'DevOps & Golang Backend Engineer with 5+ years of experience building scalable infrastructure and APIs.', projects: ['Portfolio Graph', 'This Website'], proficiency: 95, yearsExp: 5, projectCount: 25 } },
+    { id: 'Golang', group: 'backend', val: 22, details: { level: 'Expert', summary: 'High-performance backend services, APIs, and CLI tools. Proficient in concurrency patterns.', projects: ['Microservices API', 'CLI Tools'], proficiency: 90, yearsExp: 4, projectCount: 15 } },
+    { id: 'DevOps', group: 'ops', val: 22, details: { level: 'Expert', summary: 'CI/CD pipelines, infrastructure automation, and container orchestration.', projects: ['GitHub Actions', 'GitLab CI'], proficiency: 92, yearsExp: 5, projectCount: 20 } },
+    { id: 'K8s', group: 'ops', val: 16, details: { level: 'Advanced', summary: 'Container orchestration, Helm charts, and cluster management.', projects: ['EKS Clusters', 'K8s Operators'], proficiency: 75, yearsExp: 3, projectCount: 8 } },
+    { id: 'Docker', group: 'ops', val: 16, details: { level: 'Expert', summary: 'Containerization, multi-stage builds, and optimization.', projects: ['Dockerfiles', 'Compose'], proficiency: 88, yearsExp: 4, projectCount: 12 } },
+    { id: 'CI/CD', group: 'ops', val: 16, details: { level: 'Expert', summary: 'Pipeline design, automated testing, and deployment strategies.', projects: ['CI Pipelines', 'CD Automation'], proficiency: 85, yearsExp: 4, projectCount: 10 } },
+    { id: 'Terraform', group: 'ops', val: 16, details: { level: 'Advanced', summary: 'Infrastructure as Code, modules, and state management.', projects: ['AWS Infrastructure', 'Terraform Modules'], proficiency: 72, yearsExp: 2, projectCount: 7 } },
+    { id: 'AWS', group: 'cloud', val: 16, details: { level: 'Advanced', summary: 'EC2, S3, RDS, Lambda, EKS, and serverless architectures.', projects: ['Serverless Apps', 'Cloud Migration'], proficiency: 78, yearsExp: 3, projectCount: 9 } },
+    { id: 'PostgreSQL', group: 'backend', val: 13, details: { level: 'Advanced', summary: 'Schema design, queries, and performance optimization.', projects: ['Database Design', 'ORM Integration'], proficiency: 80, yearsExp: 4, projectCount: 11 } },
+    { id: 'Redis', group: 'backend', val: 13, details: { level: 'Intermediate', summary: 'Caching, sessions, and pub/sub patterns.', projects: ['Cache Layer', 'Session Store'], proficiency: 65, yearsExp: 2, projectCount: 5 } },
+    { id: 'gRPC', group: 'backend', val: 13, details: { level: 'Advanced', summary: 'Protocol buffers, streaming, and microservices communication.', projects: ['gRPC APIs', 'Service Mesh'], proficiency: 70, yearsExp: 2, projectCount: 6 } },
+    { id: 'Linux', group: 'ops', val: 13, details: { level: 'Expert', summary: 'System administration, scripting, and troubleshooting.', projects: ['Bash Scripts', 'Server Config'], proficiency: 90, yearsExp: 5, projectCount: 14 } },
+  ],
+  links: [
+    { source: 'Me', target: 'Golang' },
+    { source: 'Me', target: 'DevOps' },
+    { source: 'Me', target: 'Linux' },
+    { source: 'Me', target: 'AWS' },
+    { source: 'Golang', target: 'DevOps' },
+    { source: 'Golang', target: 'PostgreSQL' },
+    { source: 'Golang', target: 'Redis' },
+    { source: 'Golang', target: 'gRPC' },
+    { source: 'Golang', target: 'Linux' },
+    { source: 'DevOps', target: 'K8s' },
+    { source: 'DevOps', target: 'Docker' },
+    { source: 'DevOps', target: 'CI/CD' },
+    { source: 'DevOps', target: 'Terraform' },
+    { source: 'DevOps', target: 'AWS' },
+    { source: 'DevOps', target: 'Linux' },
+    { source: 'K8s', target: 'Docker' },
+    { source: 'K8s', target: 'AWS' },
+    { source: 'K8s', target: 'Terraform' },
+    { source: 'Docker', target: 'CI/CD' },
+    { source: 'Docker', target: 'Linux' },
+    { source: 'CI/CD', target: 'AWS' },
+    { source: 'CI/CD', target: 'Terraform' },
+    { source: 'Terraform', target: 'AWS' },
+    { source: 'PostgreSQL', target: 'Redis' },
+    { source: 'Redis', target: 'gRPC' },
+    { source: 'Linux', target: 'Docker' },
+  ],
+}
+
+export const neonColors = {
+  center: '#00f2ff',
+  backend: '#adff2f',
+  ops: '#ff00ff',
+  cloud: '#ffff00',
+}
+
+export const groupLabels = {
+  center: 'Core',
+  backend: 'Backend',
+  ops: 'DevOps',
+  cloud: 'Cloud',
+}
