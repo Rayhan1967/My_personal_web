@@ -330,6 +330,8 @@ export default function App() {
   const [draggedNode, setDraggedNode] = useState(null)
   const [trailPoints, setTrailPoints] = useState([])
   const [linkParticles, setLinkParticles] = useState([])
+  const [tooltip, setTooltip] = useState(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
   const addToast = useCallback((message, type = 'info', duration = 3000) => {
     const id = Date.now()
@@ -338,6 +340,14 @@ export default function App() {
 
   const removeToast = useCallback((id) => {
     setToasts(prev => prev.filter(t => t.id !== id))
+  }, [])
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY })
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
   useEffect(() => {
@@ -406,8 +416,8 @@ export default function App() {
     const interval = setInterval(() => {
       const randomNode = graphData.nodes[Math.floor(Math.random() * graphData.nodes.length)]
       setPulseNode(randomNode.id)
-      setTimeout(() => setPulseNode(null), 600)
-    }, 2000)
+      setTimeout(() => setPulseNode(null), 300)
+    }, 4000)
     return () => clearInterval(interval)
   }, [])
 
@@ -463,6 +473,9 @@ export default function App() {
   const handleNodeHover = useCallback((node) => {
     if (node) {
       setHoveredNode(node)
+      setTooltip({
+        node: node
+      })
       const connected = new Set()
       graphData.links.forEach(link => {
         const src = typeof link.source === 'object' ? link.source.id : link.source
@@ -472,6 +485,7 @@ export default function App() {
       setHighlightedNodes(new Set([node.id, ...connected]))
     } else {
       setHoveredNode(null)
+      setTooltip(null)
     }
   }, [])
 
@@ -565,10 +579,11 @@ export default function App() {
           enablePanInteraction={true}
           minZoom={0.5}
           maxZoom={8}
-          d3AlphaDecay={0.02}
-          d3VelocityDecay={0.3}
-          warmupTicks={50}
-          cooldownTicks={0}
+          d3AlphaDecay={0.08}
+          d3VelocityDecay={0.5}
+          warmupTicks={100}
+          cooldownTicks={1000}
+          numTicksPerRender={10}
           nodeLabel="id"
           onEngineStop={() => {
             graphRef.current?.zoomToFit(400, 50)
@@ -740,7 +755,27 @@ export default function App() {
         />
       </div>
 
-      <AnimatePresence>{selectedNode && <Inspector node={selectedNode} onClose={handleCloseInspector} />}</AnimatePresence>
+      <AnimatePresence>{selectedNode && <Inspector node={selectedNode} onClose={handleCloseInspector} onStatClick={(stat, node) => addToast(`${stat}: ${node.id}`, 'info')} />}</AnimatePresence>
+      
+      {tooltip && tooltip.node && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          className="fixed pointer-events-none z-50 px-3 py-2 rounded-lg glass-panel border"
+          style={{
+            left: mousePos.x + 15,
+            top: mousePos.y + 15,
+            borderColor: neonColors[tooltip.node.group],
+            boxShadow: `0 0 15px ${neonColors[tooltip.node.group]}40`
+          }}
+        >
+          <div className="text-sm font-semibold text-white">{tooltip.node.id}</div>
+          <div className="text-[10px]" style={{ color: neonColors[tooltip.node.group] }}>
+            {tooltip.node.details?.proficiency || 0}% proficiency
+          </div>
+        </motion.div>
+      )}
     </div>
   )
 }
